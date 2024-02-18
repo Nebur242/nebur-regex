@@ -1,6 +1,6 @@
 {
   "name": "nebur-regex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Human friendly regex approach",
   "main": "dist/index.min.js",
   "directories": {
