@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+dist/
+babel.config.js
+index.ts
+jest.config.ts
+tsconfig.json
+utils/
+types/
+tests/
+.gitignore
+.npmignore

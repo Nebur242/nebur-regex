@@ -1,7 +1,5 @@
 import MRHGenerator from '..';
 import {describe, expect, test} from '@jest/globals';
-
-
 describe("MRH Validator", () => {
     test("Should validate alphanumeric pattern", () => {
       const constraints = MRHGenerator.iWantRegex().toBeAlphanumeric().end();
