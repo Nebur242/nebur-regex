@@ -1,6 +1,6 @@
 {
   "name": "nebur-regex",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Human friendly regex approach",
   "main": "dist/index.min.js",
   "directories": {
@@ -9,8 +9,7 @@
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
-    "minify": "uglifyjs --compress --mangle --output dist/index.js dist/index.js",
-    "build": "tsc && npm run minify"
+    "build": "tsc"
   },
   "author": "Nebur242",
   "license": "ISC",
@@ -26,5 +25,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "uglify-js": "^3.17.4"
+  },
+  "dependencies": {
+    "nebur-regex": "^1.0.4"
   }
 }
