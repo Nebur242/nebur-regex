@@ -7,7 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:cov" : "jest --coverage",
+    "build": "tsc"
   },
   "author": "Nebur242",
   "license": "ISC",
