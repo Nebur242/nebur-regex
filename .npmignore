@@ -1,7 +1,6 @@
 node_modules/
-dist/
 coverage/
-dist/
+dist/tests
 babel.config.js
 index.ts
 jest.config.ts
