@@ -2,29 +2,58 @@
   "name": "nebur-regex",
   "version": "1.1.3",
   "description": "Human friendly regex approach",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "directories": {
     "test": "tests"
   },
+  "files": [
+    "lib/**/*",
+    "readme.md"
+  ],
   "scripts": {
+    "prepare": "husky install && npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier src/**/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix src/**/*.ts",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "minify": "uglifyjs --compress --mangle --output dist/index.js dist/index.js",
-    "build": "tsc && npm run minify"
+    "minify:types": "uglifyjs --compress --mangle --output lib/types/index.js lib/types/index.js",
+    "minify:utils": "uglifyjs --compress --mangle --output lib/utils/index.js lib/utils/index.js",
+    "minify:main": "uglifyjs --compress --mangle --output lib/index.js lib/index.js",
+    "build": "tsc && npm run minify:types && npm run minify:utils && npm run minify:main"
   },
   "author": "Nebur242",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-typescript": "^7.23.3",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "babel-jest": "^29.7.0",
+    "eslint": "^8.56.0",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
+    "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "uglify-js": "^3.17.4"
-  }
+  },
+  "keywords": [
+    "regex",
+    "string",
+    "JS",
+    "Regular expressions"
+  ]
 }
