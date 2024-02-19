@@ -1,4 +1,5 @@
-import MRHGenerator from '..';
+import * as MRHGenerator from '..';
+
 import {describe, expect, test} from '@jest/globals';
 describe("MRH Validator", () => {
     test("Should validate alphanumeric pattern", () => {
