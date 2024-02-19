@@ -91,6 +91,8 @@ class Regex {
     };
   }
 }
-export default {
+const initialization = {
   iWantRegex: () => Object.freeze(new Regex()),
 };
+
+export default initialization;
