@@ -91,8 +91,4 @@ class Regex {
     };
   }
 }
-const initialization = {
-  iWantRegex: () => Object.freeze(new Regex()),
-};
-
-export default initialization;
+export const iWantRegex = () => Object.freeze(new Regex())

@@ -19,7 +19,7 @@ $ npm install nebur-regex
 ## Example CommonJs
 
 ```typescript
-const NBR =  require('nebur-regex').default;
+const NBR =  require('nebur-regex');
 
 const constraints = 
 NBR
