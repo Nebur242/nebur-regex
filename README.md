@@ -7,12 +7,46 @@
 
 ## Description
 
-[Regex Made Simple](https://github.com/Nebur242/regex-made-simple) Package TypeScript starter repository.
+[Nebur Regex](https://github.com/Nebur242/regex-made-simple) Package TypeScript starter repository.
+
 
 ## Installation
 
 ```bash
-$ npm install regex
+$ npm install nebur-regex
+```
+
+## Example CommonJs
+
+```typescript
+const NBR =  require('nebur-regex').default;
+
+const constraints = 
+NBR
+.iWantRegex()
+.toContains('@')
+.toBeEmail()
+.end()
+
+const isValid = constraints.test("test@test.com");
+
+console.log(isValid); //true
+```
+
+## Example ES6 module
+
+```typescript
+import NBR from 'nebur-regex';
+
+const constraints = 
+NBR
+.iWantRegex()
+.toBeAlphanumeric()
+.end()
+
+const isValid = constraints.test("hello00nebur_");
+
+console.log(isValid); //false
 ```
 
 ## Test
