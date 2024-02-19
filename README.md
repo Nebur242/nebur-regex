@@ -7,7 +7,7 @@
 
 ## Description
 
-[Nebur Regex](https://github.com/Nebur242/regex-made-simple) Package TypeScript starter repository.
+[Nebur Regex](https://github.com/Nebur242/nebur-regex) Package TypeScript starter repository.
 
 
 ## Installation
@@ -61,7 +61,7 @@ $ npm run test:cov
 
 ## Support
 
-Regex an MIT-licensed open source project.
+nebur-regex is an MIT-licensed open source project.
 
 ## Stay in touch
 
