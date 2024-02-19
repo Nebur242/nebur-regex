@@ -1,17 +1,14 @@
-import { Validator, Rule } from './types'
-import { RegexPatterns, ValidationRules, ValidatorFactory } from './utils'
+import { Validator, Rule } from "./types";
+import { RegexPatterns, ValidationRules, ValidatorFactory } from "./utils";
 
 class Regex {
   private rules: Rule[] = [];
-  
+
   private mergeValidators(validators: Validator[], rule: Rule): Validator[] {
-    return [
-      ...validators,
-      ValidatorFactory.createValidator(rule.name, rule.pattern),
-    ];
+    return [...validators, ValidatorFactory.createValidator(rule.name, rule.pattern)];
   }
 
-  private createRule(name: Validator['name'], pattern: string | RegExp): Rule {
+  private createRule(name: Validator["name"], pattern: string | RegExp): Rule {
     return {
       name,
       pattern,
@@ -79,7 +76,7 @@ class Regex {
   }
 
   private validate(value: string, validators: Validator[]) {
-    return validators.every(validator => validator.rule.test(value));
+    return validators.every((validator) => validator.rule.test(value));
   }
 
   end() {
@@ -87,8 +84,8 @@ class Regex {
     return {
       test: (value: string) => this.validate(value, validators),
       getValidators: () => validators,
-      getValidator: (name: Validator['name']) => validators.find(validator => validator.name === name)?.pattern,
+      getValidator: (name: Validator["name"]) => validators.find((validator) => validator.name === name)?.pattern,
     };
   }
 }
-export const iWantRegex = () => Object.freeze(new Regex())
+export const iWantRegex = () => Object.freeze(new Regex());

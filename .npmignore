@@ -1,6 +1,6 @@
 node_modules/
 coverage/
 tsconfig.json
-test.js
 tests/
 dist/jest.config.js
+/tests-case
