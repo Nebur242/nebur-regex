@@ -19,14 +19,14 @@ $ npm install nebur-regex
 ## Example CommonJs
 
 ```typescript
-const NBR =  require('nebur-regex');
+const NBR = require('nebur-regex');
 
 const constraints = 
 NBR
 .iWantRegex()
 .toContains('@')
 .toBeEmail()
-.end()
+.end();
 
 const isValid = constraints.test("test@test.com");
 
@@ -42,7 +42,7 @@ const constraints =
 NBR
 .iWantRegex()
 .toBeAlphanumeric()
-.end()
+.end();
 
 const isValid = constraints.test("hello00nebur_");
 
