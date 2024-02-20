@@ -67,6 +67,6 @@
     "node": "20.x"
   },
   "repository": {
-    "url": "https://registry.npmjs.org/nebur-regex"
+    "url": "https://github.com/Nebur242/nebur-regex"
   }
 }

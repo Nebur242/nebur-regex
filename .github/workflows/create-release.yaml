@@ -33,7 +33,7 @@ jobs:
         npm run build
 
     - name: Publish package
-      run: npm publish
+      run: npm publish --provenance
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
