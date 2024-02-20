@@ -32,6 +32,11 @@ jobs:
         npm ci
         npm run build
 
+    - name: Publish package
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
