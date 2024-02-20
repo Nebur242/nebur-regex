@@ -14,7 +14,6 @@ describe("Lowercase Validator", () => {
   it("Should fail", () => {
     const invalidItems = ["Hello", "I am"];
     invalidItems.forEach((invalidItem) => {
-      if (constraints.test(invalidItem)) console.log(invalidItem);
       expect(constraints.test(invalidItem)).toBe(false);
     });
   });

@@ -20,7 +20,6 @@ describe("Credit Card Numbers Validator", () => {
       "5269515836312159",
     ];
     validItems.forEach((validItem) => {
-      if (!constraints.test(validItem)) console.log(validItem);
       expect(constraints.test(validItem)).toBe(true);
     });
   });
@@ -28,7 +27,6 @@ describe("Credit Card Numbers Validator", () => {
   it("Should fail", () => {
     const invalidItems = ["invalid-card-number", "411111111111", "411111111111111122233333", "abc1234567890123"];
     invalidItems.forEach((invalidItem) => {
-      if (constraints.test(invalidItem)) console.log(invalidItem);
       expect(constraints.test(invalidItem)).toBe(false);
     });
   });

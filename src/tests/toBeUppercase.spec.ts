@@ -14,7 +14,6 @@ describe("Uppercase Validator", () => {
   it("Should fail", () => {
     const invalidItems = ["HELLo", "I Am"];
     invalidItems.forEach((invalidItem) => {
-      if (constraints.test(invalidItem)) console.log(invalidItem);
       expect(constraints.test(invalidItem)).toBe(false);
     });
   });
