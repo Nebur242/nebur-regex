@@ -50,8 +50,8 @@ class Regex {
     return this;
   }
 
-  toBeURL() {
-    this.rules.push(this.createRule("URL", RegexPatterns.URL));
+  toBeURL(pattern: string | RegExp = ValidationRules.URL.pattern) {
+    this.rules.push(this.createRule("URL", pattern));
     return this;
   }
 
@@ -70,8 +70,8 @@ class Regex {
     return this;
   }
 
-  toBeCreditCardNumber() {
-    this.rules.push(this.createRule("CREDIT_CARD_NUMBER", RegexPatterns.CREDIT_CARD_NUMBER));
+  toBeCreditCardNumber(pattern: string | RegExp = ValidationRules.CREDIT_CARD_NUMBER.pattern) {
+    this.rules.push(this.createRule("CREDIT_CARD_NUMBER", pattern));
     return this;
   }
 
