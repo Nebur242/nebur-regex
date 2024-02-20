@@ -16,7 +16,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --follow-tags",
     "format": "prettier --write src/**/*.ts",
     "format:check": "prettier src/**/*.ts",
     "lint": "eslint src/**/*.ts",
@@ -26,7 +26,10 @@
     "minify:types": "uglifyjs --compress --mangle --output lib/types/index.js lib/types/index.js",
     "minify:utils": "uglifyjs --compress --mangle --output lib/utils/index.js lib/utils/index.js",
     "minify:main": "uglifyjs --compress --mangle --output lib/index.js lib/index.js",
-    "build": "tsc && npm run minify:types && npm run minify:utils && npm run minify:main"
+    "build": "tsc && npm run minify:types && npm run minify:utils && npm run minify:main",
+    "release:patch": "npm version patch --sign-git-tag",
+    "release:minor": "npm version minor --sign-git-tag",
+    "release:major": "npm version major --sign-git-tag"
   },
   "author": "Nebur242",
   "license": "MIT",
