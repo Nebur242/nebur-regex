@@ -2,15 +2,17 @@ import { Validator } from "../types";
 
 export class RegexPatterns {
   static readonly ALPHANUMERIC = /^([a-zA-Z0-9]+)$/;
-  static readonly EMAIL = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+  static readonly EMAIL =
+    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   static readonly NUMERIC = /^([0-9]+)$/;
-  static readonly PHONE_NUMBER = /^\d{3}-\d{3}-\d{4}$/;
-  static readonly DATE = /^\d{4}-\d{2}-\d{2}$/;
-  static readonly URL = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\\/?%&=]*)?$/;
-  static readonly UPPERCASE = /^[A-Z]+$/;
-  static readonly LOWERCASE = /^[a-z]+$/;
-  static readonly HEX_COLOR = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  static readonly CREDIT_CARD_NUMBER = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
+  static readonly PHONE_NUMBER =
+    /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
+  static readonly DATE = /^(0?[1-9]|1[0-2])[\/-](0?[1-9]|[12]\d|3[01])[\/-]\d{4}$/;
+  static readonly URL = /^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i;
+  static readonly UPPERCASE = /^[A-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]*$/;
+  static readonly LOWERCASE = /^[a-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/;
+  static readonly HEX_COLOR = /^#([0-9a-f]{3}){1,2}$/i;
+  static readonly CREDIT_CARD_NUMBER = /^(?:\d[ -.]*?){13,16}$/;
 }
 
 export class ValidationRules {
