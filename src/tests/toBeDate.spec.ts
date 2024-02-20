@@ -1,7 +1,7 @@
 import * as MRHGenerator from "..";
 import { describe, expect, it } from "@jest/globals";
 
-describe("Url Validator", () => {
+describe("Date Validator", () => {
   const constraints = MRHGenerator.iWantRegex().toBeDate().end();
 
   //only format: MM/DD/YYYY | M/D/YYYY | MM-DD-YYYY | M-D-YYYY
