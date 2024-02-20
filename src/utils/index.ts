@@ -7,7 +7,7 @@ export class RegexPatterns {
   static readonly NUMERIC = /^([0-9]+)$/;
   static readonly PHONE_NUMBER =
     /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
-  static readonly DATE = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
+  static readonly DATE = /^(0?[1-9]|1[0-2])[\/-](0?[1-9]|[12]\d|3[01])[\/-]\d{4}$/;
   static readonly URL = /^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i;
   static readonly UPPERCASE = /^[A-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]*$/;
   static readonly LOWERCASE = /^[a-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/;
