@@ -66,24 +66,27 @@ console.log(isValid); //false
 ```typescript
 import { iWantRegex } from 'nebur-regex';
 
+// Creating a set of regex constraints using 'iWantRegex', chaining various rules.
 const constraints = 
-  iWantRegex()
-  .toBeAlphanumeric()
-  .toBeCreditCardNumber()
-  .toBeDate()
-  .toBeEmail()
-  .toBeHexColor()
-  .toBeLowercase()
-  .toBeNumeric()
-  .toBePhoneNumber()
-  .toBeURL()
-  .toBeUppercase()
-  .toContains('hi')
-  .toMatch(/^([0-9]+)$/)
-  .end();
+  iWantRegex() // Initializing the regex constraint builder
+  .toBeAlphanumeric() // Enforcing alphanumeric characters only
+  .toBeCreditCardNumber() // Ensuring a valid credit card number format
+  .toBeDate() // Checking if the input is a valid date => Format: MM/DD/YYYY | M/D/YYYY | MM-DD-YYYY | M-D-YYYY
+  .toBeEmail() // Validating the input as an email address
+  .toBeHexColor() // Confirming the input is a valid hex color code
+  .toBeLowercase() // Verifying that all characters are in lowercase
+  .toBeNumeric() // Ensuring the input consists of numeric characters only
+  .toBePhoneNumber() // Validating the input as a phone number
+  .toBeURL() // Checking if the input is a valid URL
+  .toBeUppercase() // Verifying that all characters are in uppercase
+  .toContains('hi') // Checking if the input contains the substring 'hi'
+  .toMatch(/^([0-9]+)$/) // Ensuring the input matches the specified regex pattern (only digits)
+  .end(); // Always End the chaining of regex constraints
 
+// Testing the constraints against the string "hello world"
 const isValid = constraints.test("hello world"); // false;
 
+// Logging the result of the validation
 console.log('isValid', isValid);
 ```
 
@@ -99,7 +102,7 @@ $ npm run test:cov
 
 ## Support
 
-[nebur-regex](https://github.com/Nebur242/nebur-regex) is an MIT-licensed open source project.
+[nebur-regex](https://github.com/Nebur242/nebur-regex) is an MIT-licensed open source project. Anyone can contribute. Don't hesitate to fork, make PRs or proposals to improve and make it better.
 
 
 ## Stay in touch
