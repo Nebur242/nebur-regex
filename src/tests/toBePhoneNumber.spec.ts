@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Phone Number Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBePhoneNumber().end();
+  const constraints = iWantRegex().toBePhoneNumber().end();
 
   it("Should succeed", () => {
     const validItems = [

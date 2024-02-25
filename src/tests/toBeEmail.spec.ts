@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Email Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeEmail().end();
+  const constraints = iWantRegex().toBeEmail().end();
 
   it("Should succeed", () => {
     const validEmails = [

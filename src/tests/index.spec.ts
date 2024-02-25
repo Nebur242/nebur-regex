@@ -1,9 +1,9 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, test } from "@jest/globals";
 
 describe("MRH Validator", () => {
   test("Should return all validators", () => {
-    const validators = MRHGenerator.iWantRegex()
+    const validators = iWantRegex()
       .toBeAlphanumeric()
       .toContains("03")
       .toBeEmail()
@@ -23,7 +23,7 @@ describe("MRH Validator", () => {
   });
 
   test("Should return specific validator pattern", () => {
-    const constraints = MRHGenerator.iWantRegex().toBeAlphanumeric().end();
+    const constraints = iWantRegex().toBeAlphanumeric().end();
     const alphanumericPattern = constraints.getValidator("ALPHANUMERIC");
     expect(alphanumericPattern).toEqual(/^([a-zA-Z0-9]+)$/);
   });

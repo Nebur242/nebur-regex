@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Match Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toMatch(/03/).end();
+  const constraints = iWantRegex().toMatch(/03/).end();
 
   it("Should succeed", () => {
     expect(constraints.test("hello03world")).toBe(true);

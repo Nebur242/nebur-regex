@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Credit Card Numbers Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeCreditCardNumber().end();
+  const constraints = iWantRegex().toBeCreditCardNumber().end();
 
   it("Should succeed", () => {
     const validItems = [
