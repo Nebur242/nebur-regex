@@ -5,8 +5,6 @@
   <a href="https://twitter.com/nebur242" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
 
-## Description
-
 # Nebur-Regex 🚀
 
 **Simplify Developer Experience with Regular Expressions**
@@ -30,10 +28,13 @@ Simplify your regular expression handling and validation tasks with nebur-regex,
 $ npm install nebur-regex
 ```
 
-## Example CommonJs
+
+## Quick exqmple
 
 ```typescript
-const { iWantRegex } = require('nebur-regex');
+import { iWantRegex } from 'nebur-regex'; // ES6 module
+//OR
+const { iWantRegex } = require('nebur-regex'); // CommonJs
 
 const constraints = 
   iWantRegex()
@@ -44,21 +45,6 @@ const constraints =
 const isValid = constraints.test("test@test.com");
 
 console.log(isValid); //true
-```
-
-## Example ES6 module
-
-```typescript
-import { iWantRegex } from 'nebur-regex';
-
-const constraints = 
-  iWantRegex()
-  .toBeAlphanumeric()
-  .end();
-
-const isValid = constraints.test("hello00nebur_");
-
-console.log(isValid); //false
 ```
 
 ## More examples
@@ -84,26 +70,11 @@ const constraints =
   .end(); // Always End the chaining of regex constraints
 
 // Testing the constraints against the string "hello world"
-const isValid = constraints.test("hello world"); // false;
+const isValid = constraints.test("hello world"); 
 
 // Logging the result of the validation
-console.log('isValid', isValid);
+console.log('isValid', isValid); // false;
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-[nebur-regex](https://github.com/Nebur242/nebur-regex) is an MIT-licensed open source project. Anyone can contribute. Don't hesitate to fork, make PRs or proposals to improve and make it better.
-
 
 ## Stay in touch
 
@@ -111,31 +82,6 @@ $ npm run test:cov
 - Twitter - [@nebur242](https://twitter.com/nebur242)
 
 
-## Contribution
-
-[Nebur Regex](https://github.com/Nebur242/nebur-regex) Package TypeScript starter repository.
-
-
 ## License
 
-MIT License
-
-Copyright (c) 2024, Ruben Merson Nzaou / nebur242, <rm.nzaou.etudes@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Click here 👉 [More details](https://github.com/Nebur242/nebur-regex/licence)

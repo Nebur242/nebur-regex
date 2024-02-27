@@ -1,7 +1,7 @@
 {
   "name": "nebur-regex",
   "version": "1.2.0",
-  "description": "Human friendly regex approach",
+  "description": "A powerful utility package designed to streamline the developer experience with regular expressions. With an intuitive and expressive API, it provides a convenient way to create, combine, and apply regular expression validation rules in your JavaScript or TypeScript projects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "directories": {
@@ -9,7 +9,7 @@
   },
   "files": [
     "lib/**/*",
-    "readme.md"
+    "README.md"
   ],
   "scripts": {
     "prepare": "husky install && npm run build",
@@ -23,10 +23,7 @@
     "lint:fix": "eslint --fix src/**/*.ts",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "minify:types": "uglifyjs --compress --mangle --output lib/types/index.js lib/types/index.js",
-    "minify:utils": "uglifyjs --compress --mangle --output lib/utils/index.js lib/utils/index.js",
-    "minify:main": "uglifyjs --compress --mangle --output lib/index.js lib/index.js",
-    "build": "tsc && npm run minify:types && npm run minify:utils && npm run minify:main",
+    "build": "tsc & sh minify-js.sh",
     "release:patch": "npm version patch --sign-git-tag",
     "release:minor": "npm version minor --sign-git-tag",
     "release:major": "npm version major --sign-git-tag"

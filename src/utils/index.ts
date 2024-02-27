@@ -1,4 +1,5 @@
-import { Validator } from "../types";
+import { DateOptions, PasswordOptions, IpAddressOptions } from "../classes";
+import { CreateRegexOptions, Validator } from "../types";
 
 /**
  * A collection of predefined regular expression patterns for common validation scenarios.
@@ -75,6 +76,29 @@ export class RegexPatterns {
    * @type {RegExp}
    */
   static readonly CREDIT_CARD_NUMBER: RegExp = /^(?:\d[ -.]*?){13,16}$/;
+
+  /**
+   * Regular expression pattern for matching usernames.
+   * Allows alphanumeric characters, underscores, and hyphens.
+   * Username must be between 3 and 16 characters in length.
+   * @type {RegExp}
+   */
+  static readonly USERNAME: RegExp = /^[a-zA-Z0-9_-]{3,16}$/;
+
+  /**
+   * Regular expression pattern for matching IP addresses.
+   * Supports both IPv4 and IPv6 formats.
+   * @type {RegExp}
+   */
+  static readonly IP_ADDRESS: RegExp = new IpAddressOptions({ withFormat: "both" }).getRule().rule;
+
+  /**
+   * The pattern used by the validator to match passwords.
+   * Requires at least 6 characters, including at least one uppercase letter,
+   * one lowercase letter, one digit, and one special character.
+   * @type {RegExp}
+   */
+  static readonly PASSWORD: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
 }
 
 /**
@@ -171,6 +195,33 @@ export class ValidationRules {
     name: "CREDIT_CARD_NUMBER",
     pattern: RegexPatterns.CREDIT_CARD_NUMBER,
   };
+
+  /**
+   * Represents a lowercase validation rule.
+   * Allows only lowercase letters.
+   */
+  static readonly USERNAME = {
+    name: "USERNAME",
+    pattern: RegexPatterns.USERNAME,
+  };
+
+  /**
+   * Represents a lowercase validation rule.
+   * Allows only lowercase letters.
+   */
+  static readonly IP_ADDRESS = {
+    name: "IP_ADDRESS",
+    pattern: RegexPatterns.IP_ADDRESS,
+  };
+
+  /**
+   * Represents a lowercase validation rule.
+   * Allows only lowercase letters.
+   */
+  static readonly PASSWORD = {
+    name: "PASSWORD",
+    pattern: RegexPatterns.PASSWORD,
+  };
 }
 
 /**
@@ -201,5 +252,20 @@ export class ValidatorFactory {
        */
       rule: new RegExp(pattern),
     };
+  }
+}
+
+export class RegexOptionsFactory {
+  static createRegexOptions(createRegexOptions: CreateRegexOptions) {
+    if (createRegexOptions.name === "PASSWORD") {
+      return new PasswordOptions(createRegexOptions.options).getRule();
+    }
+    if (createRegexOptions.name === "DATE") {
+      return new DateOptions(createRegexOptions.options).getRule();
+    }
+    if (createRegexOptions.name === "IP_ADDRESS") {
+      return new IpAddressOptions(createRegexOptions.options).getRule();
+    }
+    throw new Error("No name matched :(");
   }
 }
