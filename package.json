@@ -64,7 +64,7 @@
     "Regular expressions"
   ],
   "engines": {
-    "node": "20.x"
+    "node": ">=8.x"
   },
   "repository": {
     "url": "https://github.com/Nebur242/nebur-regex"

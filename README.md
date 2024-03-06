@@ -7,8 +7,6 @@
 
 # Nebur-Regex 🚀
 
-**Simplify Developer Experience with Regular Expressions**
-
 Nebur-Regex is a powerful utility package designed to streamline the developer experience with regular expressions. With an intuitive and expressive API, it provides a convenient way to create, combine, and apply regular expression validation rules in your JavaScript or TypeScript projects.
 
 ## Key Features:
@@ -84,4 +82,4 @@ console.log('isValid', isValid); // false;
 
 ## License
 
-Click here 👉 [More details](https://github.com/Nebur242/nebur-regex/licence)
+Click here 👉 [More details](https://github.com/Nebur242/nebur-regex/blob/main/licence)
