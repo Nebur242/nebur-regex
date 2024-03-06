@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Lowercase Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeLowercase().end();
+  const constraints = iWantRegex().toBeLowercase().end();
 
   it("Should succeed", () => {
     const validItems = ["hello", "http://hello:3000"];

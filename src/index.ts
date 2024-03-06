@@ -1,25 +1,15 @@
-import { Validator, Rule } from "./types";
-import { RegexPatterns, ValidationRules, ValidatorFactory } from "./utils";
+import { Validator, Rule, IpAddressOptionsType, DateOptionsType } from "./types";
+import { RegexOptionsFactory, RegexPatterns, ValidationRules, ValidatorFactory } from "./utils";
 
-/**
- * A utility class for creating and combining validation rules using regular expressions.
- */
-class Regex {
-  /**
-   * Holds an array of validation rules.
-   * @type {Rule[]}
-   * @private
-   */
-  private rules: Rule[] = [];
-
+class Settings {
   /**
    * Merges a list of validators with a new rule and returns the updated list.
    * @param validators - The existing validators.
    * @param rule - The rule to be added.
    * @returns An array of validators including the new rule.
-   * @private
+   * @protected
    */
-  private mergeValidators(validators: Validator[], rule: Rule): Validator[] {
+  protected mergeValidators(validators: Validator[], rule: Rule): Validator[] {
     return [...validators, ValidatorFactory.createValidator(rule.name, rule.pattern)];
   }
 
@@ -28,9 +18,9 @@ class Regex {
    * @param name - The name of the validator.
    * @param pattern - The pattern used by the validator.
    * @returns A simplified rule without the precompiled regular expression rule.
-   * @private
+   * @protected
    */
-  private createRule(name: Validator["name"], pattern: string | RegExp): Rule {
+  protected createRule(name: Validator["name"], pattern: string | RegExp): Rule {
     return {
       name,
       pattern,
@@ -38,21 +28,78 @@ class Regex {
   }
 
   /**
+   * Validates a given value against an array of validators.
+   * @param value - The value to be validated.
+   * @param validators - An array of validators with precompiled rules.
+   * @returns True if the value passes all validators, false otherwise.
+   * @protected
+   */
+  protected validate(value: string, validators: Validator[]) {
+    return validators.every((validator) => validator.rule.test(value));
+  }
+}
+
+/**
+ * A utility class for creating and combining validation rules using regular expressions.
+ */
+class Regex extends Settings {
+  constructor() {
+    super();
+  }
+
+  /**
+   * Holds an array of validation rules.
+   * @type {Rule[]}
+   * @private
+   */
+  private rules: Rule[] = [];
+
+  private addRule(rule: Rule) {
+    this.rules.push(rule);
+  }
+
+  /**
    * Adds a rule to validate alphanumeric strings.
    * @returns The current instance of the Regex class.
    */
   toBeAlphanumeric() {
-    this.rules.push(this.createRule("ALPHANUMERIC", RegexPatterns.ALPHANUMERIC));
+    this.addRule(this.createRule("ALPHANUMERIC", RegexPatterns.ALPHANUMERIC));
     return this;
   }
 
   /**
-   * Adds a rule to validate email addresses.
-   * @param pattern - Custom email pattern (optional).
+   * Adds a rule to validate numeric strings.
    * @returns The current instance of the Regex class.
    */
-  toBeEmail(pattern: string | RegExp = ValidationRules.EMAIL.pattern) {
-    this.rules.push(this.createRule("EMAIL", pattern));
+  toBeNumeric() {
+    this.addRule(this.createRule("NUMERIC", RegexPatterns.NUMERIC));
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate uppercase strings.
+   * @returns The current instance of the Regex class.
+   */
+  toBeUppercase() {
+    this.addRule(this.createRule("UPPERCASE", RegexPatterns.UPPERCASE));
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate lowercase strings.
+   * @returns The current instance of the Regex class.
+   */
+  toBeLowercase() {
+    this.addRule(this.createRule("LOWERCASE", RegexPatterns.LOWERCASE));
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate hex color codes.
+   * @returns The current instance of the Regex class.
+   */
+  toBeHexColor() {
+    this.addRule(this.createRule("HEX_COLOR", RegexPatterns.HEX_COLOR));
     return this;
   }
 
@@ -62,7 +109,7 @@ class Regex {
    * @returns The current instance of the Regex class.
    */
   toContains(value: string) {
-    this.rules.push(this.createRule("CONTAINS", value));
+    this.addRule(this.createRule("CONTAINS", value));
     return this;
   }
 
@@ -72,16 +119,17 @@ class Regex {
    * @returns The current instance of the Regex class.
    */
   toMatch(pattern: string | RegExp) {
-    this.rules.push(this.createRule("CUSTOM", pattern));
+    this.addRule(this.createRule("CUSTOM", pattern));
     return this;
   }
 
   /**
-   * Adds a rule to validate numeric strings.
+   * Adds a rule to validate email addresses.
+   * @param pattern - Custom email pattern (optional).
    * @returns The current instance of the Regex class.
    */
-  toBeNumeric() {
-    this.rules.push(this.createRule("NUMERIC", RegexPatterns.NUMERIC));
+  toBeEmail(pattern: string | RegExp = ValidationRules.EMAIL.pattern) {
+    this.addRule(this.createRule("EMAIL", pattern));
     return this;
   }
 
@@ -91,17 +139,7 @@ class Regex {
    * @returns The current instance of the Regex class.
    */
   toBePhoneNumber(pattern: string | RegExp = ValidationRules.PHONE_NUMBER.pattern) {
-    this.rules.push(this.createRule("PHONE_NUMBER", pattern));
-    return this;
-  }
-
-  /**
-   * Adds a rule to validate dates.
-   * @param pattern - Custom date pattern (optional).
-   * @returns The current instance of the Regex class.
-   */
-  toBeDate(pattern: string | RegExp = ValidationRules.DATE.pattern) {
-    this.rules.push(this.createRule("DATE", pattern));
+    this.addRule(this.createRule("PHONE_NUMBER", pattern));
     return this;
   }
 
@@ -111,34 +149,7 @@ class Regex {
    * @returns The current instance of the Regex class.
    */
   toBeURL(pattern: string | RegExp = ValidationRules.URL.pattern) {
-    this.rules.push(this.createRule("URL", pattern));
-    return this;
-  }
-
-  /**
-   * Adds a rule to validate uppercase strings.
-   * @returns The current instance of the Regex class.
-   */
-  toBeUppercase() {
-    this.rules.push(this.createRule("UPPERCASE", RegexPatterns.UPPERCASE));
-    return this;
-  }
-
-  /**
-   * Adds a rule to validate lowercase strings.
-   * @returns The current instance of the Regex class.
-   */
-  toBeLowercase() {
-    this.rules.push(this.createRule("LOWERCASE", RegexPatterns.LOWERCASE));
-    return this;
-  }
-
-  /**
-   * Adds a rule to validate hex color codes.
-   * @returns The current instance of the Regex class.
-   */
-  toBeHexColor() {
-    this.rules.push(this.createRule("HEX_COLOR", RegexPatterns.HEX_COLOR));
+    this.addRule(this.createRule("URL", pattern));
     return this;
   }
 
@@ -148,7 +159,90 @@ class Regex {
    * @returns The current instance of the Regex class.
    */
   toBeCreditCardNumber(pattern: string | RegExp = ValidationRules.CREDIT_CARD_NUMBER.pattern) {
-    this.rules.push(this.createRule("CREDIT_CARD_NUMBER", pattern));
+    this.addRule(this.createRule("CREDIT_CARD_NUMBER", pattern));
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate username strings.
+   * @returns The current instance of the Regex class.
+   */
+  toBeUsername(pattern: string | RegExp = ValidationRules.USERNAME.pattern) {
+    this.addRule(this.createRule("USERNAME", pattern));
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate dates.
+   * @param options - Custom date pattern or DateFormatOptions object (optional).
+   * @type {string | RegExp | DateOptionsType} for options
+   * @returns The current instance of the Regex class.
+   */
+  toBeDate(options?: string | RegExp | DateOptionsType) {
+    if (!options) {
+      this.addRule(this.createRule("DATE", ValidationRules.DATE.pattern));
+      return this;
+    }
+
+    if (typeof options === "string" || options instanceof RegExp) {
+      this.addRule(this.createRule("DATE", options));
+      return this;
+    }
+
+    if (options.withFormat) {
+      const dateOptions = RegexOptionsFactory.createRegexOptions({
+        name: "DATE",
+        options,
+      });
+      this.addRule(this.createRule("DATE", dateOptions.pattern));
+      return this;
+    }
+
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate ipAddresses.
+   * @param options - Custom ipAddress pattern or ipAddressOptions object (optional).
+   * @type {string | RegExp | IpAddressOptionsType}
+   * @returns The current instance of the Regex class.
+   */
+  toBeIpAddress(options?: string | RegExp | IpAddressOptionsType) {
+    const name: Validator["name"] = "IP_ADDRESS";
+
+    if (!options) {
+      this.addRule(this.createRule(name, ValidationRules.IP_ADDRESS.pattern));
+      return this;
+    }
+
+    if (typeof options === "string" || options instanceof RegExp) {
+      this.addRule(this.createRule(name, options));
+      return this;
+    }
+
+    if (options.withFormat) {
+      const passwordOptions = RegexOptionsFactory.createRegexOptions({
+        name,
+        options,
+      });
+      this.addRule(this.createRule(name, passwordOptions.pattern));
+      return this;
+    }
+
+    return this;
+  }
+
+  /**
+   * Adds a rule to validate passwords.
+   * Password must have at least
+   * One Uppercase, one Lowercase and one Number
+   * And must be at least 6 long
+   * @param pattern - Custom password pattern (optional).
+   * @type {string | RegExp}
+   * @returns The current instance of the Regex class.
+   */
+  toCheckPassword(pattern: string | RegExp = ValidationRules.PASSWORD.pattern) {
+    this.addRule(this.createRule("PASSWORD", pattern));
     return this;
   }
 
@@ -177,21 +271,10 @@ class Regex {
       /**
        * Gets the pattern of a specific validator.
        * @param name - The name of the validator.
-       * @returns The pattern used by the specified validator.
+       * @returns The regex rule used by the specified validator.
        */
-      getValidator: (name: Validator["name"]) => validators.find((validator) => validator.name === name)?.pattern,
+      getValidator: (name: Validator["name"]) => validators.find((validator) => validator.name === name)?.rule,
     };
-  }
-
-  /**
-   * Validates a given value against an array of validators.
-   * @param value - The value to be validated.
-   * @param validators - An array of validators with precompiled rules.
-   * @returns True if the value passes all validators, false otherwise.
-   * @private
-   */
-  private validate(value: string, validators: Validator[]) {
-    return validators.every((validator) => validator.rule.test(value));
   }
 }
 

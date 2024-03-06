@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Url Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeURL().end();
+  const constraints = iWantRegex().toBeURL().end();
 
   it("Should succeed", () => {
     const validItems = [

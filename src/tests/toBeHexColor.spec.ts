@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("HexColor Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeHexColor().end();
+  const constraints = iWantRegex().toBeHexColor().end();
 
   it("Should succeed", () => {
     const validItems = [

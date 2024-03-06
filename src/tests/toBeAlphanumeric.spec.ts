@@ -1,8 +1,8 @@
-import * as MRHGenerator from "..";
+import { iWantRegex } from "..";
 import { describe, expect, it } from "@jest/globals";
 
 describe("Alphanumeric Validator", () => {
-  const constraints = MRHGenerator.iWantRegex().toBeAlphanumeric().end();
+  const constraints = iWantRegex().toBeAlphanumeric().end();
 
   it("should success", () => {
     const validItems = ["abc123", "JohnDoe2022", "user123", "Alphanumeric567", "Test123", "123456"];
