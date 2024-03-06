@@ -89,7 +89,7 @@ export type CreateRegexOptions =
       options: IpAddressOptionsType;
     };
 
-export type IpAddressFormat = "v4" | "v6" | "both";
+export type IpAddressFormat = "v4" | "v6";
 
 export type DateFormat =
   | "MM/DD/YYYY | M/D/YYYY | MM-DD-YYYY | M-D-YYYY"
