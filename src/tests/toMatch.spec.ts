@@ -11,4 +11,11 @@ describe("Match Validator", () => {
   it("Should fail", () => {
     expect(constraints.test("helloworld")).toBe(false);
   });
+
+  it("produces stable results for stateful regular expressions", () => {
+    const globalConstraints = iWantRegex().toMatch(/hello/g).end();
+
+    expect(globalConstraints.test("hello")).toBe(true);
+    expect(globalConstraints.test("hello")).toBe(true);
+  });
 });

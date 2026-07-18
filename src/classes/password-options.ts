@@ -20,20 +20,20 @@ export class PasswordOptions implements OptionsRule {
   private readonly mustContains: string[];
 
   constructor(options?: Partial<PasswordOptionsType>) {
-    this.minLength = options?.minLength || 6;
-    this.maxLength = options?.maxLength || 16;
+    this.minLength = options?.minLength ?? 6;
+    this.maxLength = options?.maxLength ?? 16;
     this.atLeastOneSpecialCharacter = options?.atLeastOneSpecialCharacter ?? true;
     this.atLeastOneNumber = options?.atLeastOneNumber ?? true;
     this.atLeastOneUpperCase = options?.atLeastOneUpperCase ?? true;
     this.atLeastOneLowerCase = options?.atLeastOneLowerCase ?? true;
     this.disallowWhitespace = options?.disallowWhitespace ?? true;
-    this.maxConsecutiveIdentical = options?.maxConsecutiveIdentical || 2;
-    this.maxConsecutiveSequential = options?.maxConsecutiveSequential || 3;
-    this.bannedWords = options?.bannedWords || [];
-    this.minUniqueCharacters = options?.minUniqueCharacters || 0;
-    this.maxRepeatedCharacters = options?.maxRepeatedCharacters || 2;
-    this.bannedSequences = options?.bannedSequences || [];
-    this.mustContains = options?.mustContains || [];
+    this.maxConsecutiveIdentical = options?.maxConsecutiveIdentical ?? 2;
+    this.maxConsecutiveSequential = options?.maxConsecutiveSequential ?? 3;
+    this.bannedWords = options?.bannedWords ?? [];
+    this.minUniqueCharacters = options?.minUniqueCharacters ?? 0;
+    this.maxRepeatedCharacters = options?.maxRepeatedCharacters ?? 2;
+    this.bannedSequences = options?.bannedSequences ?? [];
+    this.mustContains = options?.mustContains ?? [];
   }
 
   private applyOptionsToRegexPattern(regexPattern: string) {

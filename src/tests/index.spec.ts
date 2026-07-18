@@ -27,4 +27,14 @@ describe("MRH Validator", () => {
     const alphanumericPattern = constraints.getValidator("ALPHANUMERIC");
     expect(alphanumericPattern).toEqual(/^([a-zA-Z0-9]+)$/);
   });
+
+  test("Should not expose the finalized validator collection for mutation", () => {
+    const constraints = iWantRegex().toBeNumeric().end();
+    const validators = constraints.getValidators();
+
+    validators.length = 0;
+
+    expect(constraints.getValidators()).toHaveLength(1);
+    expect(constraints.test("123")).toBe(true);
+  });
 });

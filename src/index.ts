@@ -10,7 +10,7 @@ class Settings {
    * @protected
    */
   protected mergeValidators(validators: Validator[], rule: Rule): Validator[] {
-    return [...validators, ValidatorFactory.createValidator(rule.name, rule.pattern)];
+    return [...validators, rule.rule ?? ValidatorFactory.createValidator(rule.name, rule.pattern)];
   }
 
   /**
@@ -20,10 +20,11 @@ class Settings {
    * @returns A simplified rule without the precompiled regular expression rule.
    * @protected
    */
-  protected createRule(name: Validator["name"], pattern: string | RegExp): Rule {
+  protected createRule(name: Validator["name"], pattern: string | RegExp, rule?: RegExp): Rule {
     return {
       name,
       pattern,
+      ...(rule ? { rule: { name, pattern, rule } } : {}),
     };
   }
 
@@ -34,8 +35,11 @@ class Settings {
    * @returns True if the value passes all validators, false otherwise.
    * @protected
    */
-  protected validate(value: string, validators: Validator[]) {
-    return validators.every((validator) => validator.rule.test(value));
+  protected validate(value: string, validators: readonly Validator[]) {
+    return validators.every((validator) => {
+      validator.rule.lastIndex = 0;
+      return validator.rule.test(value);
+    });
   }
 }
 
@@ -109,7 +113,8 @@ class Regex extends Settings {
    * @returns The current instance of the Regex class.
    */
   toContains(value: string) {
-    this.addRule(this.createRule("CONTAINS", value));
+    const escapedValue = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    this.addRule(this.createRule("CONTAINS", escapedValue));
     return this;
   }
 
@@ -174,9 +179,38 @@ class Regex extends Settings {
 
   /**
    * Adds a rule to validate dates.
-   * @param options - Custom date pattern or DateFormatOptions object (optional).
+   * @param options - Options for date validation:
+   *                 - string | RegExp: Custom date pattern
+   *                 - DateOptionsType: Configuration object with format, strict validation, and range options
    * @type {string | RegExp | DateOptionsType} for options
    * @returns The current instance of the Regex class.
+   *
+   * @example
+   * // Basic date validation with default MM/DD/YYYY pattern
+   * iWantRegex().toBeDate().end().test('12/25/2023'); // true
+   *
+   * @example
+   * // ISO 8601 date validation
+   * iWantRegex().toBeDate({ withFormat: 'ISO8601' }).end().test('2023-12-25'); // true
+   *
+   * @example
+   * // Strict date validation (validates that the date actually exists)
+   * iWantRegex().toBeDate({
+   *   withFormat: 'MM/DD/YYYY | M/D/YYYY | MM-DD-YYYY | M-D-YYYY',
+   *   strictValidation: true
+   * }).end().test('02/31/2023'); // false (February doesn't have 31 days)
+   *
+   * @example
+   * // Date range validation
+   * iWantRegex().toBeDate({
+   *   withFormat: 'YYYY-MM-DD | YYYY/M/D | YYYY-MM-DD | YYYY-M-D',
+   *   strictValidation: true,
+   *   rangeValidation: {
+   *     after: '2023-01-01',
+   *     before: '2023-12-31',
+   *     inclusive: true
+   *   }
+   * }).end().test('2023-06-15'); // true (date is within range)
    */
   toBeDate(options?: string | RegExp | DateOptionsType) {
     if (!options) {
@@ -194,7 +228,7 @@ class Regex extends Settings {
         name: "DATE",
         options,
       });
-      this.addRule(this.createRule("DATE", dateOptions.pattern));
+      this.addRule(this.createRule("DATE", dateOptions.pattern, dateOptions.rule));
       return this;
     }
 
@@ -202,10 +236,34 @@ class Regex extends Settings {
   }
 
   /**
-   * Adds a rule to validate ipAddresses.
-   * @param options - Custom ipAddress pattern or ipAddressOptions object (optional).
+   * Adds a rule to validate IP addresses.
+   * @param options - Options for IP address validation:
+   *                 - string | RegExp: Custom IP address pattern
+   *                 - IpAddressOptionsType: Configuration object with format, CIDR notation, and IP type options
    * @type {string | RegExp | IpAddressOptionsType}
    * @returns The current instance of the Regex class.
+   *
+   * @example
+   * // Basic IP address validation (matches both IPv4 and IPv6)
+   * iWantRegex().toBeIpAddress().end().test('192.168.1.1'); // true
+   *
+   * @example
+   * // IPv4 only validation
+   * iWantRegex().toBeIpAddress({ withFormat: 'v4' }).end().test('2001:db8::1'); // false
+   *
+   * @example
+   * // IPv6 with CIDR notation
+   * iWantRegex().toBeIpAddress({
+   *   withFormat: 'v6',
+   *   validateCIDR: true
+   * }).end().test('2001:db8::/32'); // true
+   *
+   * @example
+   * // Private IPv4 address validation
+   * iWantRegex().toBeIpAddress({
+   *   withFormat: 'v4',
+   *   validateType: ['private']
+   * }).end().test('192.168.1.1'); // true (private IP)
    */
   toBeIpAddress(options?: string | RegExp | IpAddressOptionsType) {
     const name: Validator["name"] = "IP_ADDRESS";
@@ -221,11 +279,11 @@ class Regex extends Settings {
     }
 
     if (options.withFormat) {
-      const passwordOptions = RegexOptionsFactory.createRegexOptions({
+      const ipAddressOptions = RegexOptionsFactory.createRegexOptions({
         name,
         options,
       });
-      this.addRule(this.createRule(name, passwordOptions.pattern));
+      this.addRule(this.createRule(name, ipAddressOptions.pattern, ipAddressOptions.rule));
       return this;
     }
 
@@ -252,7 +310,9 @@ class Regex extends Settings {
    * @returns An object with methods to test the value against the accumulated rules.
    */
   end() {
-    const validators = this.rules.reduce<Validator[]>((prev, curr) => this.mergeValidators(prev, curr), []);
+    const validators = Object.freeze(
+      this.rules.reduce<Validator[]>((prev, curr) => this.mergeValidators(prev, curr), []),
+    );
 
     return {
       /**
@@ -266,7 +326,7 @@ class Regex extends Settings {
        * Gets the array of validators.
        * @returns An array of validators with names, patterns, and precompiled rules.
        */
-      getValidators: () => validators,
+      getValidators: () => [...validators],
 
       /**
        * Gets the pattern of a specific validator.

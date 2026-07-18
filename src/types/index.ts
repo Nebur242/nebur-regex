@@ -44,14 +44,30 @@ export type Validator = {
 /**
  * Represents a simplified version of a validator without the precompiled regular expression rule.
  */
-export type Rule = Omit<Validator, "rule">;
+export type Rule = Omit<Validator, "rule"> & {
+  /**
+   * An optional precompiled validator. This is used by validators that need
+   * behavior beyond a plain regular-expression match.
+   */
+  rule?: Validator;
+};
 
 export type IpAddressOptionsType = {
   withFormat: IpAddressFormat;
+  validateCIDR?: boolean;
+  validateType?: IpAddressType[];
 };
 
 export type DateOptionsType = {
   withFormat: DateFormat;
+  strictValidation?: boolean | undefined;
+  rangeValidation?:
+    | {
+        before?: Date | string | undefined;
+        after?: Date | string | undefined;
+        inclusive?: boolean | undefined;
+      }
+    | undefined;
 };
 
 type RequireAtLeastOne<T> = {
@@ -89,9 +105,12 @@ export type CreateRegexOptions =
       options: IpAddressOptionsType;
     };
 
-export type IpAddressFormat = "v4" | "v6";
+export type IpAddressFormat = "v4" | "v6" | "both";
+
+export type IpAddressType = "private" | "public" | "loopback" | "linkLocal" | "multicast" | "any";
 
 export type DateFormat =
   | "MM/DD/YYYY | M/D/YYYY | MM-DD-YYYY | M-D-YYYY"
   | "DD/MM/YYYY | D/M/YYYY | DD-MM-YYYY | D-M-YYYY"
-  | "YYYY/MM/DD | YYYY/M/D | YYYY-MM-DD | YYYY-M-D";
+  | "YYYY/MM/DD | YYYY/M/D | YYYY-MM-DD | YYYY-M-D"
+  | "ISO8601";

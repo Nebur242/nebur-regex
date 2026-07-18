@@ -11,4 +11,11 @@ describe("Contains Validator", () => {
   it("Should fail", () => {
     expect(constraints.test("helloworld")).toBe(false);
   });
+
+  it("treats regex metacharacters as literal text", () => {
+    const literalDot = iWantRegex().toContains(".").end();
+
+    expect(literalDot.test("example.com")).toBe(true);
+    expect(literalDot.test("examplecom")).toBe(false);
+  });
 });
