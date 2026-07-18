@@ -2,17 +2,30 @@
   "name": "nebur-regex",
   "version": "1.5.0",
   "description": "A powerful utility package designed to streamline the developer experience with regular expressions. With an intuitive and expressive API, it provides a convenient way to create, combine, and apply regular expression validation rules in your JavaScript or TypeScript projects",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
   "directories": {
     "test": "tests"
   },
   "files": [
-    "lib/**/*",
+    "dist/index.js",
+    "dist/index.mjs",
+    "dist/index.d.ts",
     "README.md"
   ],
   "scripts": {
-    "prepare": "husky install && npm run build",
+    "prepare": "npm run build",
+    "prepare:hooks": "husky",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
@@ -23,7 +36,8 @@
     "lint:fix": "eslint --fix src/**/*.ts",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "build": "tsc && sh minify-js.sh",
+    "build": "tsup",
+    "pack:size": "npm pack --dry-run --json --ignore-scripts",
     "release:patch": "npm version patch --sign-git-tag",
     "release:minor": "npm version minor --sign-git-tag",
     "release:major": "npm version major --sign-git-tag"
@@ -49,8 +63,8 @@
     "resolve.exports": "^2.0.3",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
-    "uglify-js": "^3.17.4"
+    "tsup": "^8.5.1",
+    "typescript": "^5.3.3"
   },
   "lint-staged": {
     "*.{ts, json}": [
