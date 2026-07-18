@@ -2,6 +2,7 @@ import type { Config } from "jest";
 
 const config: Config = {
   verbose: true,
+  watchman: false,
   collectCoverageFrom: ["src/**/*.ts", "!src/tests/**"],
   coverageThreshold: {
     global: {
