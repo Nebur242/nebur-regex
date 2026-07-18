@@ -38,7 +38,7 @@
     "test:cov": "jest --coverage",
     "build": "npm run clean && esbuild src/index.ts --bundle --minify --platform=node --target=node18 --format=cjs --outfile=dist/index.js && esbuild src/index.ts --bundle --minify --platform=node --target=node18 --format=esm --outfile=dist/index.mjs && tsc --emitDeclarationOnly --declaration --outDir dist --rootDir src",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
-    "pack:size": "npm pack --dry-run --json --ignore-scripts",
+    "pack:size": "npm run build && npm pack --dry-run --json --ignore-scripts",
     "release:patch": "npm version patch --sign-git-tag",
     "release:minor": "npm version minor --sign-git-tag",
     "release:major": "npm version major --sign-git-tag"
